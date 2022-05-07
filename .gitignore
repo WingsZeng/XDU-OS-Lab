@@ -1,0 +1,15 @@
+# latex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
+*.xdv
+
+# minted
+_minted-main/
+
+# only source code and screenshot
+lib*/*
+!lib*/*.c
+!lib*/*.png

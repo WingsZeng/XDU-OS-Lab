@@ -106,6 +106,91 @@
 		\subsection{实验心得体会}
 			本次实验使用了 \mintinline{c}{signal()} 函数捕获信号并做相应的处理。通过本次实验，理解了如何在进程之间进行信号通信。
 
+	\section{实验四\ 匿名管道通信}
+		\subsection{实验目的}
+			学习使用匿名管道在两个进程间建立通信。
+
+		\subsection{实验软硬件环境}
+			\texttt{Linux version 5.15.0-30-generic (buildd@lgw01-amd64-058) \\ gcc (Ubuntu 11.2.0-19ubuntu1) 11.2.0, GNU ld (GNU Binutils for Ubuntu) 2.38}
+
+		\subsection{实验内容}
+			分别建立名为 Parent 的单文档应用程序和 Child 的单文档应用程序作为父子进程，由父进程创建一个匿名管道，实现父子进程向匿名管道写入和读取数据。
+
+		\subsection{实验程序及分析}
+			\inputminted[linenos,breaklines,tabsize=4]{c}{lib4/lib4.c}
+
+			创建一个匿名管道，父子进程共享该管道。父进程向管道中写入数据，子进程从管道中读数据并输出。
+
+		\subsection{实验截图}
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[width=\textwidth]{lib4/Screenshot.png}
+				\caption{实验四\ 匿名管道通信}
+			\end{figure}
+
+		\subsection{实验心得体会}
+			本次实验使用了 \mintinline{c}{pipe()} 函数创建匿名管道。通过父子进程共享数据实现管道通信。通过本次实验，理解了如何使用匿名管道进行通信。
+
+	\section{实验五\ 命名管道通信}
+		\subsection{实验目的}
+			学习使用命名管道在多进程间建立通信。
+
+		\subsection{实验软硬件环境}
+			\texttt{Linux version 5.15.0-30-generic (buildd@lgw01-amd64-058) \\ gcc (Ubuntu 11.2.0-19ubuntu1) 11.2.0, GNU ld (GNU Binutils for Ubuntu) 2.38}
+
+		\subsection{实验内容}
+			建立父子进程，由父进程创建一个命名管道，由子进程向命名管道写入数据，由父进程从命名管道读取数据。
+
+		\subsection{实验程序及分析}
+			\inputminted[linenos,breaklines,tabsize=4]{c}{lib5/lib5.c}
+
+			在当前目录下创建一个命名管道。子进程以写的方式打开命名管道，并向其中写入数据。父进程以读的方式打开命名管道，并从其中读取数据并输出。
+
+			同时还可以观察到在当前目录下创建的命名管道文件。
+
+			\newpage
+
+		\subsection{实验截图}
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[width=\textwidth]{lib5/Screenshot.png}
+				\caption{实验五\ 命名管道通信}
+			\end{figure}
+
+		\subsection{实验心得体会}
+			本次实验使用了 \mintinline{c}{mkfifo()} 函数创建命名管道，利用命名管道实现进程间的通信。通过本次实验，理解了如何使用命名管道进行通信。
+
+	\section{实验六\ 信号量实现进程同步}
+		\subsection{实验目的}
+			进程同步是操作系统多进程/多线程并发执行的关键之一，进程同步是并发进程为了完成共同任务采用某个条件来协调他们的活动，这是进程之间发生的一种直接制约关系。本次试验是利用信号量进行进程同步。
+
+		\subsection{实验软硬件环境}
+			\texttt{Linux version 5.15.0-30-generic (buildd@lgw01-amd64-058) \\ gcc (Ubuntu 11.2.0-19ubuntu1) 11.2.0, GNU ld (GNU Binutils for Ubuntu) 2.38}
+
+		\subsection{实验内容}
+			\begin{itemize}
+				\item 生产者进程生产产品，消费者进程消费产品。
+				\item 当生产者进程生产产品时，如果没有空缓冲区可用，那么生产者进程必须等待消费者进程释放出一个缓冲区。
+				\item 当消费者进程消费产品时，如果缓冲区中没有产品，那么消费者进程将被阻塞，直到新的产品被生产出来。
+			\end{itemize}
+
+		\subsection{实验程序及分析}
+			\inputminted[linenos,breaklines,tabsize=4]{c}{lib6/lib6.c}
+
+			生产者先生产，当信号量 \mintinline{c}{empty} 为 0 时阻塞。待消费者开始消费，使得 \mintinline{c}{empty} 大于 0 后，生产者才可以继续生产。消费者将物品消费完后，信号量 \mintinline{c}{full} 为 0 时阻塞。等待生产者生产后，再唤醒并消费。同时，使用信号量 \mintinline{c}{mutex} 实现互斥锁，使得对生产者和消费者无法同时进入临界区对缓冲队列进行修改。
+
+			\newpage
+
+		\subsection{实验截图}
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[width=\textwidth]{lib6/Screenshot.png}
+				\caption{实验六\ 信号量实现进程同步}
+			\end{figure}
+
+		\subsection{实验心得体会}
+			本次实验使用了信号量进行生产者与消费者的同步。通过本次实验，理解了如何使用信号量来进行同步。
+
 \end{document}
 
 
